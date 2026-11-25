@@ -1,0 +1,89 @@
+---
+import SEO from "../components/SEO.astro";
+import { site } from "../config/site";
+import logoImage from "../assets/logo.webp";
+import heroImage from "../assets/hero.webp";
+import "../styles/global.css";
+
+type Props = Pick<
+  import("../components/SEO.astro").Props,
+  "title" | "description" | "image" | "imageAlt" | "type" | "noindex"
+>;
+
+const siteUrl = Astro.site!.href;
+const { address } = site;
+const sameAs = Object.values(site.social).filter(Boolean);
+const hasAddress = Object.values(address).some(Boolean);
+
+// Drops empty strings, empty arrays and undefined so the JSON-LD only carries real data.
+const clean = (obj: Record<string, unknown>) =>
+  Object.fromEntries(
+    Object.entries(obj).filter(
+      ([, v]) => v !== "" && v !== undefined && !(Array.isArray(v) && v.length === 0),
+    ),
+  );
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    clean({
+      "@type": site.type,
+      "@id": `${siteUrl}#business`,
+      name: site.name,
+      description: site.description,
+      url: siteUrl,
+      logo: new URL(logoImage.src, siteUrl).href,
+      image: new URL(heroImage.src, siteUrl).href,
+      telephone: site.telephone,
+      email: site.email,
+      address: hasAddress
+        ? clean({
+            "@type": "PostalAddress",
+            streetAddress: address.street,
+            addressLocality: address.city,
+            addressRegion: address.region,
+            postalCode: address.postalCode,
+            addressCountry: address.country,
+          })
+        : undefined,
+      areaServed: site.areaServed.map((name) => ({ "@type": "Place", name })),
+      hasOfferCatalog: site.services.length
+        ? {
+            "@type": "OfferCatalog",
+            name: "Servicios",
+            itemListElement: site.services.map((name) => ({
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name },
+            })),
+          }
+        : undefined,
+      sameAs,
+    }),
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}#website`,
+      url: siteUrl,
+      name: site.name,
+      inLanguage: site.lang,
+      publisher: { "@id": `${siteUrl}#business` },
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={site.themeColor} />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/favicon-96.png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <SEO {...Astro.props} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
