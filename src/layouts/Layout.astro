@@ -2,8 +2,7 @@
 import SEO from "../components/SEO.astro";
 import IconSprite from "../components/IconSprite.astro";
 import { site } from "../config/site";
-import { plans, video } from "../data/landing";
-import logoImage from "../assets/logo.webp";
+import { localBusiness, website, app } from "../config/jsonld";
 import "../styles/global.css";
 
 type Props = import("../components/SEO.astro").Props;
@@ -13,40 +12,7 @@ const abs = (path: string) => new URL(path, siteUrl).href;
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${siteUrl}#website`,
-      name: site.name,
-      alternateName: site.altername,
-      url: siteUrl,
-      inLanguage: site.lang,
-      publisher: { "@id": `${siteUrl}#business` },
-    },
-    {
-      "@type": "SoftwareApplication",
-      name: site.name,
-      description: site.description,
-      url: siteUrl,
-      applicationCategory: "BusinessApplication",
-      operatingSystem: "Android",
-      offers: Object.values(plans).map((plan) => ({
-        "@type": "Offer",
-        name: plan.name,
-        price: plan.amount.toFixed(2),
-        priceCurrency: "PEN",
-      })),
-    },
-    {
-      "@type": "VideoObject",
-      name: video.title,
-      description: video.description,
-      thumbnailUrl: abs(video.thumbnail),
-      uploadDate: video.uploadDate,
-      duration: video.duration,
-      contentUrl: abs(video.src),
-    },
-  ],
+  "@graph": [localBusiness, website, app],
 };
 ---
 

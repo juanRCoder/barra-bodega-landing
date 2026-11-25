@@ -1,6 +1,7 @@
 ---
 import { getImage } from "astro:assets";
 import SectionHead from "../ui/SectionHead.astro";
+import Check from "../ui/Check.astro";
 import posterImage from "../../assets/images/video_poster.jpg";
 import { video } from "../../data/landing";
 
@@ -12,9 +13,9 @@ const poster = await getImage({ src: posterImage, width: 1280, format: "webp" })
     <SectionHead
       center
       dark
-      eyebrow="Mírala en acción"
-      title="Así se vende con BarraBodega"
-      text="Un recorrido rápido por la app, de la venta al cierre del día."
+      eyebrow="Tutorial en video"
+      title="Cómo vender en tu bodega con BarraBodega"
+      text="Mira en menos de un minuto cómo la app de ventas para bodegas te ayuda a cobrar, controlar fiados e inventario desde el celular."
     />
 
     <div
@@ -35,10 +36,18 @@ const poster = await getImage({ src: posterImage, width: 1280, format: "webp" })
         Tu navegador no puede reproducir este video.
       </video>
     </div>
-    <p class="mt-6 text-center">
-      <a class="text-white/80 underline-offset-4 hover:text-lime" href={video.watchPath}>
-        Ver el video en pantalla completa
-      </a>
-    </p>
+    <div class="mx-auto mt-10 max-w-240">
+      <h3 class="text-xl font-semibold">En este video verás:</h3>
+      <ul class="mt-4 grid list-none gap-3 p-0 text-mist sm:grid-cols-2">
+        {
+          video.highlights.map((item) => (
+            <li class="flex items-start gap-3">
+              <Check tone="lime" class="mt-0.5 size-5" />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 </section>

@@ -1,5 +1,5 @@
 export const site = {
-  title: "BarraBodega | Tu bodega en orden, sin cuaderno",
+  title: "BarraBodega | App para bodegas: ventas, fiados e inventario",
   description:
     "BarraBodega es la app para tiendas de barrio en Perú: escanea productos, registra ventas, controla fiados y sabe cuánto ganaste hoy. Prueba gratis 1 mes.",
   url: "https://barrabodega.lat",

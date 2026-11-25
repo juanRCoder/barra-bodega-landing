@@ -9,7 +9,10 @@ const lastmod = new Date().toISOString();
 // https://astro.build/config
 export default defineConfig({
   site: site.url,
-  integrations: [sitemap()],
+  integrations: [
+    // lastmod: fecha del build, avisa a Google cuándo cambió la página.
+    sitemap({ serialize: (item) => ({ ...item, lastmod }) }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

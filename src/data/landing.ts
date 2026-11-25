@@ -158,5 +158,11 @@ export const video = {
   uploadDate: "2026-11-25T00:00:00+00:00",
   duration: "PT33S",
   thumbnail: "/videos/barrabodega-lanzamiento-poster.jpg",
-  watchPath: "/video/",
+  // Texto bajo el video: describe lo que se ve, con las palabras que busca tu cliente.
+  highlights: [
+    "Cómo vender escaneando el código de barras con la cámara del celular",
+    "Cómo registrar un fiado y saber cuánto te debe cada cliente",
+    "Cómo agregar productos sin código, como pan o queso",
+    "Cómo ver cuánto vendiste y ganaste en el día",
+  ],
 };
