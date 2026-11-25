@@ -1,43 +1,75 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import Icon from "./Icon.astro";
+
+type Variant = "primary" | "lime" | "dark" | "ghost-light" | "ghost-dark";
 
 type Props = Omit<HTMLAttributes<"a"> & HTMLAttributes<"button">, "type"> & {
-  label?: string;
   href?: string;
   type?: "button" | "submit" | "reset";
+  variant?: Variant;
+  size?: "md" | "sm";
+  /** Ícono de WhatsApp a la izquierda. */
+  whatsapp?: boolean;
+  /** Flecha a la derecha. */
+  arrow?: boolean;
+  /** Abre en otra pestaña (links externos como WhatsApp). */
+  external?: boolean;
 };
 
 const {
-  label,
   href,
   type = "button",
-  target,
-  rel,
-  class: className = "",
+  variant = "primary",
+  size = "md",
+  whatsapp = false,
+  arrow = false,
+  external = false,
+  class: className,
   ...attrs
 } = Astro.props;
 
-const isLink = Boolean(href);
-const Tag = isLink ? "a" : "button";
-const linkRel =
-  rel ?? (target === "_blank" ? "noopener noreferrer" : undefined);
+const Tag = href ? "a" : "button";
 
-const baseClass =
-  "relative cursor-pointer py-2 px-8 text-center inline-flex justify-center text-base transition-[transform,translate,background-color,border-color,color,box-shadow] duration-300 ease-in-out group outline-offset-4 focus:outline-2 focus:outline-offset-4 overflow-hidden rounded-sm";
+const variants: Record<Variant, string> = {
+  primary:
+    "bg-green text-white shadow-[0_10px_24px_#176b4d33] hover:bg-green-dark hover:shadow-[0_16px_32px_#176b4d47]",
+  lime: "bg-lime text-green-deep hover:bg-lime-light hover:shadow-[0_14px_34px_#d9f36a4d]",
+  dark: "bg-green-deep text-white hover:bg-green-mid hover:shadow-[0_16px_32px_#0b1a1440]",
+  "ghost-light":
+    "bg-white/8 text-white inset-ring-[1.5px] inset-ring-white/25 backdrop-blur-sm hover:bg-white/14",
+  "ghost-dark":
+    "bg-transparent text-green-deep inset-ring-[1.5px] inset-ring-green-deep/25 hover:bg-green-deep/5",
+};
+
+const sizes = {
+  md: "min-h-13 px-6.5 text-base",
+  sm: "min-h-[42px] px-[18px] text-[15px]",
+};
 ---
 
 <Tag
   {...attrs}
-  class={`${baseClass} ${className}`.trim()}
   href={href}
-  type={isLink ? undefined : type}
-  target={target}
-  rel={isLink ? linkRel : undefined}
+  type={href ? undefined : type}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener" : undefined}
+  class:list={[
+    "group/btn inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-full font-semibold no-underline",
+    "transition-[background-color,translate,box-shadow,scale] duration-300 ease-out-quint hover:-translate-y-0.5 active:scale-97",
+    variants[variant],
+    sizes[size],
+    className,
+  ]}
 >
-  <span class="relative z-20">{label ?? <slot />}</span>
-  <!-- Brillo -->
-  <span
-    aria-hidden="true"
-    class="absolute -left-full top-[-50%] h-[200%] w-[45%] rotate-30 bg-linear-to-r from-transparent via-white/40 to-transparent z-10 blur-md group-hover:left-[150%] transition-all duration-500 ease-out"
-  />
+  {whatsapp && <Icon name="whatsapp" class="size-[18px] group-hover/btn:animate-wiggle" />}
+  <slot />
+  {
+    arrow && (
+      <Icon
+        name="arrow"
+        class="size-[18px] transition-transform duration-300 ease-out-quint group-hover/btn:translate-x-1"
+      />
+    )
+  }
 </Tag>

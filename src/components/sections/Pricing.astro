@@ -1,0 +1,217 @@
+---
+import Button from "../ui/Button.astro";
+import Check from "../ui/Check.astro";
+import Icon from "../ui/Icon.astro";
+import SectionHead from "../ui/SectionHead.astro";
+import { payMethods, planFeatures, plans, waUrl } from "../../data/landing";
+
+const plan = plans.monthly;
+const toggleButton =
+  "relative z-1 inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full px-4 text-[15px] font-semibold text-muted transition-colors duration-300 ease-soft aria-pressed:text-white sm:px-5.5";
+---
+
+<section id="precio" class="py-20 sm:py-26">
+  <div class="container-page">
+    <SectionHead
+      center
+      eyebrow="Precio"
+      title="Un solo plan, todo incluido"
+      text="Pruébalo gratis un mes. Después eliges cómo pagar: mes a mes o todo el año con 2 meses de regalo."
+    />
+
+    <div class="text-center" data-reveal>
+      <div
+        class="relative mx-auto mb-10 inline-grid grid-cols-2 rounded-full bg-surface p-1.25 inset-ring inset-ring-line"
+        role="group"
+        aria-label="Forma de pago"
+      >
+        <span
+          id="billing-pill"
+          class="absolute inset-y-1.25 left-1.25 rounded-full bg-green transition-[translate,width] duration-500 ease-out-quint"
+        ></span>
+        <button class={toggleButton} type="button" data-plan="monthly" aria-pressed="true">
+          Mensual
+        </button>
+        <button class={toggleButton} type="button" data-plan="annual" aria-pressed="false">
+          Anual
+          <small class="rounded-full bg-lime px-2 py-0.5 text-[11px] font-bold text-green-deep">
+            -17%
+          </small>
+        </button>
+      </div>
+    </div>
+
+    <div class="mx-auto grid max-w-250 gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+      <article
+        id="price-card"
+        class="rounded-[28px] bg-[linear-gradient(-151deg,var(--color-green-deep)_13%,var(--color-green-mid)_87%)] px-6 py-8 text-white sm:p-10"
+        data-reveal="scale"
+      >
+        <div id="price-main" aria-live="polite">
+          <span
+            class="inline-flex rounded-full bg-lime px-3 py-1.5 text-[13px] font-bold text-green-deep"
+            data-field="pill">{plan.pill}</span
+          >
+          <h3 class="mt-4.5 text-2xl" data-field="name">{plan.name}</h3>
+          <div class="mt-4.5 flex items-baseline gap-2">
+            <span
+              class="text-[62px] leading-none font-semibold tracking-tighter tabular-nums sm:text-[76px]"
+              >S/ <span data-field="amount">{plan.amount}</span></span
+            >
+            <span class="text-lg text-mist" data-field="per">{plan.per}</span>
+          </div>
+          <p class="mt-2.5 min-h-6.5 text-mist" data-field="note">{plan.note}</p>
+        </div>
+
+        <ul
+          class="mt-7 mb-8 grid list-none gap-x-5 gap-y-3 border-t border-white/12 p-0 pt-6 sm:grid-cols-2"
+        >
+          {
+            planFeatures.map((feature) => (
+              <li class="flex gap-2.5">
+                <Check tone="lime" />
+                {feature}
+              </li>
+            ))
+          }
+        </ul>
+
+        <Button
+          id="price-cta"
+          href={waUrl(plan.message)}
+          external
+          variant="lime"
+          whatsapp
+          data-magnetic
+        >
+          Empezar mi mes gratis
+        </Button>
+      </article>
+
+      <div class="grid grid-rows-[1fr_auto] gap-4" data-stagger>
+        <button
+          id="plan-alt"
+          type="button"
+          class="group/alt flex cursor-pointer flex-col items-start rounded-[20px] border-[1.5px] border-dashed border-[#c9d6c2] bg-surface p-7 text-left transition-[border-color,translate,box-shadow] duration-450 ease-soft hover:-translate-y-1 hover:border-green hover:shadow-[0_20px_40px_#1336261a]"
+        >
+          <span class="text-[15px] text-muted" data-alt="label">{plan.alt.label}</span>
+          <span class="mt-2.5 text-4xl font-semibold tracking-[-0.04em]">
+            <span data-alt="price">{plan.alt.price}</span>
+            <small class="text-base font-normal tracking-normal text-muted" data-alt="per"
+              >{plan.alt.per}</small
+            >
+          </span>
+          <span
+            class="mt-2 rounded-full bg-soft px-2.5 py-1 text-xs font-bold text-green-dark"
+            data-alt="tag">{plan.alt.tag}</span
+          >
+          <span class="mt-auto inline-flex items-center gap-2 pt-5.5 font-semibold text-green">
+            <span data-alt="cta">{plan.alt.cta}</span>
+            <Icon
+              name="arrow"
+              class="size-4.5 transition-transform duration-300 ease-out-quint group-hover/alt:translate-x-1"
+            />
+          </span>
+        </button>
+
+        <div class="rounded-[20px] border border-line bg-surface px-7 py-6">
+          <h4 class="m-0 text-base font-semibold">Pagas como prefieras</h4>
+          <div class="mt-3 flex flex-wrap gap-2">
+            {
+              payMethods.map((method) => (
+                <span class="rounded-full border border-line bg-paper px-3.5 py-1.5 text-sm font-medium">
+                  {method}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { plans, waUrl, type PlanKey } from "../../data/landing";
+  import { M, EASE_OUT } from "../../scripts/motion";
+
+  let currentPlan: PlanKey = "monthly";
+  const pill = document.getElementById("billing-pill")!;
+  const toggleButtons = [
+    ...document.querySelectorAll<HTMLButtonElement>("button[data-plan]"),
+  ];
+  const priceMain = document.getElementById("price-main")!;
+  const planAlt = document.getElementById("plan-alt")!;
+  const priceCta = document.getElementById("price-cta") as HTMLAnchorElement;
+  const field = (name: string) =>
+    priceMain.querySelector<HTMLElement>(`[data-field="${name}"]`)!;
+  const altField = (name: string) =>
+    planAlt.querySelector<HTMLElement>(`[data-alt="${name}"]`)!;
+
+  // La píldora verde se mueve detrás del botón activo.
+  const placePill = () => {
+    const active = toggleButtons.find((b) => b.dataset.plan === currentPlan)!;
+    pill.style.width = `${active.offsetWidth}px`;
+    pill.style.translate = `${active.offsetLeft - 5}px 0`;
+  };
+  placePill();
+  document.fonts?.ready.then(placePill);
+  window.addEventListener("resize", placePill);
+
+  const fillPlan = (plan: PlanKey) => {
+    const data = plans[plan];
+    field("pill").textContent = data.pill;
+    field("name").textContent = data.name;
+    field("per").textContent = data.per;
+    field("note").textContent = data.note;
+    Object.entries(data.alt).forEach(([key, value]) => {
+      altField(key).textContent = value;
+    });
+    priceCta.href = waUrl(data.message);
+  };
+
+  const setPlan = async (plan: PlanKey) => {
+    if (plan === currentPlan) return;
+    const from = plans[currentPlan].amount;
+    currentPlan = plan;
+    toggleButtons.forEach((b) =>
+      b.setAttribute("aria-pressed", String(b.dataset.plan === plan)),
+    );
+    placePill();
+
+    if (!M) {
+      fillPlan(plan);
+      field("amount").textContent = String(plans[plan].amount);
+      return;
+    }
+
+    await M.animate(
+      [priceMain, planAlt],
+      { opacity: 0, y: -10 },
+      { duration: 0.18 },
+    );
+    fillPlan(plan);
+    M.animate(from, plans[plan].amount, {
+      duration: 0.7,
+      ease: EASE_OUT,
+      onUpdate: (v) => (field("amount").textContent = String(Math.round(v))),
+    });
+    M.animate(
+      [priceMain, planAlt],
+      { opacity: [0, 1], y: [14, 0] },
+      { type: "spring", bounce: 0.3, duration: 0.6, delay: M.stagger(0.06) },
+    );
+    M.animate(
+      "#price-card",
+      { scale: [0.97, 1] },
+      { type: "spring", bounce: 0.45, duration: 0.6 },
+    );
+  };
+
+  toggleButtons.forEach((b) =>
+    b.addEventListener("click", () => setPlan(b.dataset.plan as PlanKey)),
+  );
+  planAlt.addEventListener("click", () =>
+    setPlan(currentPlan === "monthly" ? "annual" : "monthly"),
+  );
+</script>

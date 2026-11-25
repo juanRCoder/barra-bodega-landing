@@ -1,0 +1,81 @@
+---
+import Icon from "../ui/Icon.astro";
+import { navLinks, waUrl } from "../../data/landing";
+
+const productLinks = navLinks.filter((link) => link.href !== "#preguntas");
+const year = new Date().getFullYear();
+const link = "no-underline transition-colors duration-200 hover:text-lime";
+---
+
+<footer class="mt-26 bg-green-deep pt-16 pb-8 text-mist">
+  <div class="container-page">
+    <div
+      class="grid grid-cols-2 gap-10 lg:grid-cols-[1.4fr_1fr_1fr]"
+      data-stagger
+    >
+      <div class="col-span-2 lg:col-span-1">
+        <a
+          class="group/brand inline-flex items-center gap-2.5 text-[19px] font-semibold tracking-[-0.02em] text-white no-underline"
+          href="#inicio"
+        >
+          <span class="grid size-9 place-items-center rounded-[10px] bg-lime text-green-dark transition-[rotate] duration-500 ease-out-quint group-hover/brand:-rotate-8">
+            <Icon name="barcode" class="size-5" />
+          </span>
+          BarraBodega
+        </a>
+        <p class="mt-4 max-w-85 text-[15px]">
+          La app para llevar las ventas, el inventario y los fiados de tu tienda
+          de barrio desde el celular.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="mb-4 text-[15px] font-semibold text-white">Producto</h4>
+        <ul class="grid list-none gap-2.5 p-0 text-[15px]">
+          {productLinks.map((item) => (
+            <li>
+              <a class={link} href={item.href}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="mb-4 text-[15px] font-semibold text-white">Contacto</h4>
+        <ul class="grid list-none gap-2.5 p-0 text-[15px]">
+          <li>
+            <a class={link} href={waUrl()} target="_blank" rel="noopener">
+              WhatsApp
+            </a>
+          </li>
+          <li>
+            <a class={link} href="#preguntas">
+              Preguntas frecuentes
+            </a>
+          </li>
+          <li>Lima, Perú</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-wrap justify-between gap-3 border-t border-white/10 pt-6 text-sm">
+      <span>© {year} BarraBodega. Todos los derechos reservados.</span>
+      <div class="text-right">
+        <p>Hecho en Perú para las bodegas del Perú.</p>
+        <span class="block text-right text-mist/70 text-xs">
+          Desarrollado por{" "}
+          <a
+            class="font-medium underline-offset-4 transition-colors duration-200 hover:underline"
+            href="https://juanrasoftware.lat"
+            target="_blank"
+            rel="noopener"
+          >
+            juanra software
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>

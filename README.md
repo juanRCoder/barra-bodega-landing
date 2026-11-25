@@ -1,21 +1,34 @@
-# Astro landing template
+![BarraBodega: tu bodega en orden, sin cuaderno](public/og-image.jpg)
 
-Astro 7 + Tailwind 4, with SEO already set up (meta, Open Graph, JSON-LD, sitemap, robots.txt).
+# BarraBodega · Landing page
 
-## When you clone it
+Landing de **BarraBodega**, la app para tiendas de barrio en Perú: escanea productos con la cámara del celular, registra ventas, controla fiados y muestra cuánto se vendió en el día. La página presenta el producto y lleva al visitante a pedir su mes de prueba gratis por WhatsApp.
 
-1. **`src/config/site.ts`**: fill in every `TODO` (name, domain, title, description, contact, services, social links).
-2. **Images to replace** (keep the same name and size):
-   - `public/og-image.jpg`: 1200×630, the image shown when the link is shared
-   - `public/favicon.ico` (48×48), `public/favicon-96.png` (96×96), `public/apple-touch-icon.png` (180×180)
-   - `src/assets/logo.webp` and `src/assets/hero.webp`
-3. `pnpm build` and check `dist/index.html`, `dist/robots.txt` and `dist/sitemap-index.xml`.
+**Sitio:** https://barrabodega.netlify.app
 
-## Commands
+## Stack
 
-| Command        | Action                            |
-| :------------- | :-------------------------------- |
-| `pnpm install` | Install dependencies              |
-| `pnpm dev`     | Dev server at `localhost:4321`    |
-| `pnpm build`   | Build to `./dist/` (with sitemap) |
-| `pnpm preview` | Preview the build                 |
+- **Astro 7**: sitio estático, sin JavaScript salvo el de las secciones interactivas
+- **Tailwind CSS 4**: tema propio (colores, tipografía, animaciones) en `src/styles/global.css`
+- **Motion**: animaciones de entrada, parallax y efectos ligados al scroll; respeta `prefers-reduced-motion`
+- **SEO**: meta tags, Open Graph, JSON-LD (Organization, SoftwareApplication, VideoObject, FAQPage), sitemap y robots.txt
+
+## Cómo editar
+
+- **Textos, precios y preguntas:** `src/data/landing.ts`
+- **Número de WhatsApp, título y descripción para Google:** `src/config/site.ts`
+- **Imágenes:** reemplaza el archivo en `src/assets/images/` con el mismo nombre
+- **Imagen para compartir en redes:** `public/og-image.jpg` (1200×630)
+
+## Comandos
+
+| Comando        | Acción                                 |
+| :------------- | :------------------------------------- |
+| `pnpm install` | Instala las dependencias               |
+| `pnpm dev`     | Servidor de desarrollo en `localhost:4321` |
+| `pnpm build`   | Genera el sitio en `./dist/`           |
+| `pnpm preview` | Previsualiza el build                  |
+
+---
+
+Desarrollado por [juanra software](https://juanrasoftware.lat).

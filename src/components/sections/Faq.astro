@@ -1,0 +1,110 @@
+---
+import Button from "../ui/Button.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
+import { faqs, waUrl } from "../../data/landing";
+---
+
+<section id="preguntas" class="pb-20 sm:pb-26">
+  <div
+    class="container-page grid items-start gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16"
+  >
+    <div class="lg:sticky lg:top-[110px]" data-stagger>
+      <Eyebrow>Preguntas frecuentes</Eyebrow>
+      <h2 class="mt-3.5 text-[clamp(32px,4.4vw,48px)]">
+        ¿Tienes dudas? Aquí las resolvemos
+      </h2>
+      <p class="mt-3.5 text-lg text-muted">
+        Si no encuentras tu respuesta, escríbenos y te contestamos el mismo día.
+      </p>
+      <div>
+        <Button href={waUrl()} external whatsapp class="mt-7">
+          Preguntar por WhatsApp
+        </Button>
+      </div>
+    </div>
+
+    <div class="border-t border-line" data-stagger>
+      {
+        faqs.map((faq, i) => (
+          <details class="group/faq border-b border-line" data-faq>
+            <summary class="grid cursor-pointer list-none grid-cols-[auto_1fr_auto] items-center gap-3.5 px-1 py-6.5 text-[17px] font-semibold tracking-[-0.01em] sm:gap-5 sm:text-[19px] [&::-webkit-details-marker]:hidden">
+              <span class="text-sm font-medium text-muted tabular-nums transition-colors group-hover/faq:text-green group-open/faq:text-green">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              {faq.q}
+              <span
+                class="relative grid size-9 place-items-center rounded-full bg-soft text-green transition-[background-color,color,rotate] duration-450 ease-out-quint group-open/faq:rotate-180 group-open/faq:bg-green group-open/faq:text-white before:absolute before:h-0.5 before:w-3.5 before:rounded-full before:bg-current after:absolute after:h-0.5 after:w-3.5 after:rotate-90 after:rounded-full after:bg-current after:transition-[rotate] after:duration-450 after:ease-out-quint group-open/faq:after:rotate-0"
+                aria-hidden="true"
+              />
+            </summary>
+            <div class="overflow-hidden" data-faq-body>
+              <p class="pr-2 pb-6 pl-[38px] text-muted sm:pr-15 sm:pb-6.5 sm:pl-[50px]">
+                {faq.a}
+              </p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { M, EASE_OUT, EASE_SOFT } from "../../scripts/motion";
+
+  // Acordeón: solo una pregunta abierta a la vez.
+  const faqItems = [
+    ...document.querySelectorAll<HTMLDetailsElement>("[data-faq]"),
+  ];
+  const bodyOf = (item: HTMLDetailsElement) =>
+    item.querySelector<HTMLElement>("[data-faq-body]")!;
+
+  const closeItem = (item: HTMLDetailsElement) => {
+    const body = bodyOf(item);
+    if (!M) {
+      item.open = false;
+      return;
+    }
+    M.animate(
+      body,
+      { height: [`${body.offsetHeight}px`, "0px"], opacity: [1, 0] },
+      { duration: 0.32, ease: EASE_SOFT },
+    ).then(() => {
+      item.open = false;
+      body.style.height = "";
+      body.style.opacity = "";
+    });
+  };
+
+  const openItem = (item: HTMLDetailsElement) => {
+    item.open = true;
+    const body = bodyOf(item);
+    if (!M) return;
+    M.animate(
+      body,
+      { height: ["0px", `${body.scrollHeight}px`], opacity: [0, 1] },
+      { duration: 0.45, ease: EASE_OUT },
+    ).then(() => {
+      body.style.height = "auto";
+    });
+    M.animate(
+      body.querySelector("p")!,
+      { y: [-8, 0] },
+      { duration: 0.45, ease: EASE_OUT },
+    );
+  };
+
+  faqItems.forEach((item) => {
+    item.querySelector("summary")!.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (item.open) {
+        closeItem(item);
+        return;
+      }
+      faqItems
+        .filter((other) => other !== item && other.open)
+        .forEach(closeItem);
+      openItem(item);
+    });
+  });
+</script>

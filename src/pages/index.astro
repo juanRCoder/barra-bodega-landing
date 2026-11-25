@@ -1,9 +1,32 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/sections/Navbar.astro";
+import Hero from "../components/sections/Hero.astro";
+import Marquee from "../components/sections/Marquee.astro";
+import BeforeAfter from "../components/sections/BeforeAfter.astro";
+import HowItWorks from "../components/sections/HowItWorks.astro";
+import Video from "../components/sections/Video.astro";
+import Pricing from "../components/sections/Pricing.astro";
+import Faq from "../components/sections/Faq.astro";
+import FinalCta from "../components/sections/FinalCta.astro";
+import Footer from "../components/sections/Footer.astro";
 ---
 
 <Layout>
-  <main>
-    <h1 class="text-center font-bold underline">Hello world!</h1>
+  <Navbar />
+  <main id="inicio">
+    <Hero />
+    <Marquee />
+    <BeforeAfter />
+    <HowItWorks />
+    <Video />
+    <Pricing />
+    <Faq />
+    <FinalCta />
   </main>
+  <Footer />
 </Layout>
+
+<script>
+  import "../scripts/animations";
+</script>

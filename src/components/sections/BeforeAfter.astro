@@ -1,0 +1,88 @@
+---
+import { Image } from "astro:assets";
+import Check from "../ui/Check.astro";
+import Icon from "../ui/Icon.astro";
+import SectionHead from "../ui/SectionHead.astro";
+import beforeImage from "../../assets/images/before_barrabodega.webp";
+import afterImage from "../../assets/images/after_barrabodega.webp";
+import { compare } from "../../data/landing";
+
+const cards = [
+  { ...compare.before, image: beforeImage, before: true, reveal: "left" },
+  { ...compare.after, image: afterImage, before: false, reveal: "right" },
+];
+---
+
+<section id="antes-despues" class="py-20 sm:py-26">
+  <div class="container-page">
+    <SectionHead
+      center
+      eyebrow="Antes y después"
+      title="Del cuaderno a tu bodega en el celular"
+      text="Lo que hoy anotas a mano y sumas por la noche, BarraBodega lo hace solo mientras atiendes."
+    />
+
+    <div
+      class="relative mx-auto grid max-w-250 grid-cols-1 gap-10 md:grid-cols-2 md:gap-7"
+    >
+      {
+        cards.map((card, i) => (
+          <>
+            {i === 1 && (
+              <div
+                class="absolute top-1/2 left-1/2 z-2 grid size-14 -translate-1/2 rotate-90 place-items-center rounded-full border-5 border-paper bg-green text-white before:absolute before:-inset-1.25 before:animate-ring before:rounded-full before:border-2 before:border-green md:top-30 md:rotate-0"
+                data-reveal="pop"
+                aria-hidden="true"
+              >
+                <Icon name="arrow" class="size-5.5" />
+              </div>
+            )}
+            <article
+              class="group/card overflow-hidden rounded-3xl border border-line bg-surface transition-[translate,box-shadow] duration-450 ease-soft hover:-translate-y-1.5 hover:shadow-card"
+              data-reveal={card.reveal}
+            >
+              <div class="relative h-50 overflow-hidden md:h-60">
+                <Image
+                  src={card.image}
+                  alt={card.alt}
+                  widths={[480, 768]}
+                  sizes="(min-width: 720px) 500px, 100vw"
+                  class:list={[
+                    "size-full scale-106 object-cover object-[center_32%] transition-[scale] duration-800 ease-soft group-hover/card:scale-112",
+                    card.before && "brightness-90 saturate-50",
+                  ]}
+                  data-parallax
+                />
+                <span
+                  class:list={[
+                    "absolute top-4 left-4 rounded-full px-3.5 py-1.5 text-[13px] font-semibold",
+                    card.before
+                      ? "bg-danger-soft text-danger"
+                      : "bg-lime text-green-deep",
+                  ]}
+                >
+                  {card.tag}
+                </span>
+              </div>
+              <div class="px-6 pt-5.5 pb-6.5">
+                <h3 class="text-[21px]">{card.title}</h3>
+                <ul class="m-0 mt-4 grid list-none gap-2.5 p-0 text-[15.5px]">
+                  {card.items.map((item) => (
+                    <li class="flex items-center gap-2.5">
+                      <Check
+                        tone={card.before ? "danger" : "soft"}
+                        icon={card.before ? "x" : "check"}
+                        class="size-5.5"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          </>
+        ))
+      }
+    </div>
+  </div>
+</section>

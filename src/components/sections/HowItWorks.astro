@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+import SectionHead from "../ui/SectionHead.astro";
+import scanProduct from "../../assets/images/scan_product.webp";
+import scanSale from "../../assets/images/escaneo_bodega.webp";
+import seeNumbers from "../../assets/images/ver_numeros_de_app.webp";
+import { steps } from "../../data/landing";
+
+const images = [scanProduct, scanSale, seeNumbers];
+---
+
+<section id="como-funciona" class="pb-20 sm:pb-26">
+  <div class="container-page">
+    <SectionHead
+      eyebrow="Cómo funciona"
+      title="Tres pasos y tu bodega ya está en el celular"
+      text="Solo necesitas tu teléfono Android. La cámara funciona como lector de códigos de barras."
+    />
+
+    <div class="grid gap-6 lg:grid-cols-3" data-stagger>
+      {
+        steps.map((step, i) => (
+          <article class="group/step flex flex-col overflow-hidden rounded-[20px] border border-line bg-surface transition-[translate,box-shadow] duration-450 ease-soft hover:-translate-y-1.5 hover:shadow-card">
+            <div class="aspect-video overflow-hidden bg-soft lg:aspect-auto lg:h-75">
+              <Image
+                src={images[i]}
+                alt={step.alt}
+                widths={[480, 768, 1100]}
+                sizes="(min-width: 960px) 380px, 100vw"
+                class="size-full scale-106 object-cover transition-[scale] duration-800 ease-soft group-hover/step:scale-112"
+                data-parallax
+              />
+            </div>
+            <div class="px-6 pt-6 pb-7">
+              <span class="inline-grid size-8.5 place-items-center rounded-[10px] bg-green text-[15px] font-semibold text-white">
+                {i + 1}
+              </span>
+              <h3 class="mt-4 text-[21px]">{step.title}</h3>
+              <p class="mt-2 text-muted">{step.text}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

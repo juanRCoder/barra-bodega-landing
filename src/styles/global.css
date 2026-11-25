@@ -1,1 +1,161 @@
 @import "tailwindcss";
+
+/* ============================ Tema (tokens) ============================ */
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+
+  --color-green: #176b4d;
+  --color-green-dark: #104b37;
+  --color-green-deep: #0b1a14;
+  --color-green-mid: #173e2c;
+  --color-lime: #d9f36a;
+  --color-lime-light: #e6fa8f;
+  --color-paper: #f7f8f2;
+  --color-surface: #ffffff;
+  --color-soft: #eaf2df;
+  --color-ink: #17221d;
+  --color-muted: #65736b;
+  --color-mist: #d7e4d5;
+  --color-line: #e4e9df;
+  --color-danger: #b5392b;
+  --color-danger-soft: #fbeae6;
+  --color-laser: #ff4b3a;
+
+  --breakpoint-md: 45rem; /* 720px */
+  --breakpoint-lg: 60rem; /* 960px */
+  --container-page: 1160px;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+
+  --shadow-card: 0 24px 48px #1336261f;
+  --shadow-float: 0 30px 60px #0b1a1440;
+
+  --animate-marquee: marquee 36s linear infinite;
+  --animate-cue: cue 2.2s var(--ease-soft) infinite;
+  --animate-ring: ring 2.4s var(--ease-soft) infinite;
+  --animate-laser: laser 2.4s var(--ease-soft) infinite alternate;
+  --animate-toast: toast 4.8s var(--ease-out-quint) infinite;
+  --animate-wiggle: wiggle 0.6s var(--ease-soft);
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes cue {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+  @keyframes ring {
+    from {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+  }
+  @keyframes laser {
+    from {
+      top: 12px;
+    }
+    to {
+      top: calc(100% - 14px);
+    }
+  }
+  @keyframes toast {
+    0%,
+    42% {
+      opacity: 0;
+      transform: translateY(10px) scale(0.92);
+    }
+    50%,
+    92% {
+      opacity: 1;
+      transform: none;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+  @keyframes wiggle {
+    30% {
+      rotate: -12deg;
+    }
+    60% {
+      rotate: 9deg;
+    }
+  }
+}
+
+/* Contenedor centrado de la página. */
+@utility container-page {
+  width: min(var(--container-page), 100% - 40px);
+  margin-inline: auto;
+}
+
+/* ================================ Base ================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    @apply bg-paper font-sans text-base/[1.55] text-ink antialiased sm:text-[17px];
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-semibold tracking-[-0.035em] text-balance leading-[1.06];
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ===================== Estados iniciales de Motion =====================
+   Con JS lo animable arranca oculto; si Motion no arranca (.motion-off),
+   se muestra todo tal cual. */
+.js [data-reveal],
+.js [data-stagger] > *,
+.js [data-fade] {
+  opacity: 0;
+}
+
+.js [data-word] {
+  transform: translateY(110%);
+}
+
+.motion-off [data-reveal],
+.motion-off [data-stagger] > *,
+.motion-off [data-fade] {
+  opacity: 1 !important;
+}
+
+.motion-off [data-word] {
+  transform: none !important;
+}

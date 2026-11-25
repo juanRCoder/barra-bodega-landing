@@ -1,49 +1,41 @@
-// ============================================================================
-// SITE CONFIG — the only file to edit when cloning this template.
-// SEO meta, Open Graph, JSON-LD, robots.txt and the sitemap all read from here.
-// Fields left as "" are omitted from the JSON-LD automatically.
-// ============================================================================
-
 export const site = {
-  // --- Identity -------------------------------------------------------------
-  name: "Nombre del Negocio", // TODO: business name
-  url: "https://example.com", // TODO: production domain, no trailing slash
-  // TODO: schema.org type: LocalBusiness, Store, Restaurant, BarOrPub,
-  // ProfessionalService, Organization… (https://schema.org/LocalBusiness)
-  type: "LocalBusiness",
-
-  // --- Language -------------------------------------------------------------
-  lang: "es", // TODO: <html lang>, e.g. "es-PE", "es-AR"
-  locale: "es_ES", // TODO: og:locale, e.g. "es_PE", "es_AR"
+  name: "BarraBodega",
+  url: "https://barrabodega.netlify.app",
+  type: "Organization",
+  lang: "es-PE",
+  locale: "es_PE",
 
   // --- SEO copy -------------------------------------------------------------
-  // Title: ~50-60 characters, main keyword + business name.
-  title: "Nombre del Negocio | Servicio principal en Ciudad", // TODO
-  // Description: ~140-160 characters, what you offer + where + call to action.
+  title: "BarraBodega · Tu bodega en orden, sin cuaderno",
   description:
-    "Descripción breve del negocio: qué ofrece, dónde y por qué elegirlo. Contáctanos hoy.", // TODO
-
-  // --- Social image (public/og-image.jpg, 1200×630) -------------------------
-  ogImage: "/og-image.jpg", // TODO: replace the file in /public
-  ogImageAlt: "Descripción de la imagen para compartir", // TODO
+    "BarraBodega es la app para tiendas de barrio en Perú: escanea productos, registra ventas, controla fiados y sabe cuánto ganaste hoy. Prueba gratis 1 mes.",
+  ogImage: "/og-image.jpg",
+  logo: "/logo.png",
+  ogImageAlt: "BarraBodega: tu bodega en orden, sin cuaderno. Prueba gratis 1 mes.",
 
   // --- Brand ----------------------------------------------------------------
-  themeColor: "#000000", // TODO: mobile browser bar color
+  themeColor: "#0B1A14",
 
   // --- Contact (NAP: keep identical to your Google Business Profile) -------
   email: "", // TODO: contacto@dominio.com
-  telephone: "", // TODO: international format, e.g. +51999999999
+  telephone: "51956402456",
+  whatsapp: "51956402456",
+  whatsappMessage: "Hola, quiero probar BarraBodega gratis por 1 mes en mi bodega.",
   address: {
-    street: "", // TODO
-    city: "", // TODO
-    region: "", // TODO
-    postalCode: "", // TODO
-    country: "", // TODO: ISO code, e.g. "PE", "AR"
+    street: "",
+    city: "Lima",
+    region: "",
+    postalCode: "",
+    country: "PE",
   },
-  areaServed: [] as string[], // TODO: e.g. ["Lima", "Perú"]
+  areaServed: ["Perú"] as string[],
 
   // --- Services shown in JSON-LD -------------------------------------------
-  services: [] as string[], // TODO: e.g. ["Servicio 1", "Servicio 2"]
+  services: [
+    "App de ventas e inventario para bodegas",
+    "Control de fiados",
+    "Escáner de códigos de barras",
+  ] as string[],
 
   // --- Social profiles (empty ones are skipped) -----------------------------
   social: {

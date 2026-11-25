@@ -1,0 +1,125 @@
+---
+import { Image } from "astro:assets";
+import Button from "../ui/Button.astro";
+import Check from "../ui/Check.astro";
+import heroImage from "../../assets/images/hero_image.webp";
+import { heroChecks, waUrl } from "../../data/landing";
+
+const lines = [
+  { words: ["Tu", "bodega", "en", "orden."], accent: false },
+  { words: ["Sin", "cuaderno."], accent: true },
+];
+---
+
+<section
+  id="hero"
+  class="relative isolate grid min-h-[min(100svh,900px)] items-center overflow-hidden bg-green-deep pt-28 pb-26 text-white sm:pt-32 sm:pb-28"
+>
+  <div id="hero-bg" class="absolute inset-x-0 top-[-6%] -z-20 h-[112%]">
+    <Image
+      src={heroImage}
+      alt=""
+      widths={[640, 960, 1376]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="size-full object-cover"
+      data-fade
+    />
+  </div>
+
+  <!-- Velo para que el texto se lea sobre la foto -->
+  <div
+    class="absolute inset-0 -z-10 bg-[linear-gradient(0deg,#0b1a14f5_0%,#0b1a14cc_55%,#0b1a1499_100%)] lg:bg-[linear-gradient(90deg,#0b1a14f5_0%,#0b1a14e0_38%,#0b1a1480_70%,#0b1a1440_100%),linear-gradient(0deg,#0b1a14e6_0%,transparent_45%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="container-page">
+    <div id="hero-content" class="max-w-175">
+      <h1
+        class="text-[clamp(48px,7.6vw,92px)] leading-none tracking-[-0.045em]"
+        aria-label="Tu bodega en orden. Sin cuaderno."
+      >
+        {
+          lines.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line.words.map((word, j) => (
+                <>
+                  {j > 0 && " "}
+                  <span
+                    class="mb-[-0.08em] inline-block overflow-hidden pb-[0.08em] align-top"
+                    aria-hidden="true"
+                  >
+                    <span
+                      data-word
+                      class:list={["inline-block", line.accent && "text-lime"]}
+                    >
+                      {word}
+                    </span>
+                  </span>
+                </>
+              ))}
+            </>
+          ))
+        }
+      </h1>
+
+      <p class="mt-6.5 max-w-135 text-[19px] text-mist" data-hero data-fade>
+        Escanea tus productos, registra cada venta en segundos y lleva los
+        fiados de tus clientes desde el celular. Al cerrar sabes cuánto vendiste
+        y qué te falta reponer.
+      </p>
+
+      <div class="mt-9 flex flex-wrap gap-3" data-hero data-fade>
+        <Button
+          href={waUrl()}
+          external
+          variant="lime"
+          whatsapp
+          data-magnetic
+          class="max-sm:basis-full"
+        >
+          Probar gratis 1 mes
+        </Button>
+        <Button
+          href="#como-funciona"
+          variant="ghost-light"
+          arrow
+          class="max-sm:basis-full"
+        >
+          Ver cómo funciona
+        </Button>
+      </div>
+
+      <ul
+        class="mt-8 flex list-none flex-wrap gap-x-6 gap-y-2.5 p-0 text-[15px] text-mist"
+        data-hero
+        data-fade
+      >
+        {
+          heroChecks.map((item) => (
+            <li class="inline-flex items-center gap-2">
+              <Check tone="lime" />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <a
+    id="scroll-cue"
+    href="#antes-despues"
+    aria-label="Seguir bajando"
+    class="absolute bottom-7 left-1/2 grid -translate-x-1/2 justify-items-center gap-2 text-xs tracking-[0.08em] text-mist uppercase no-underline"
+    data-fade
+  >
+    Desliza
+    <span
+      class="relative h-9 w-[1.5px] overflow-hidden bg-white/15 after:absolute after:inset-0 after:animate-cue after:bg-lime"
+    ></span>
+  </a>
+</section>

@@ -1,0 +1,13 @@
+---
+// Ícono del sprite de IconSprite.astro.
+interface Props {
+  name: "barcode" | "check" | "x" | "whatsapp" | "arrow" | "menu";
+  class?: string;
+}
+
+const { name, class: className = "size-[18px]" } = Astro.props;
+---
+
+<svg class:list={["shrink-0", className]} aria-hidden="true">
+  <use href={`#i-${name}`}></use>
+</svg>

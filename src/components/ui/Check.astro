@@ -1,0 +1,30 @@
+---
+import Icon from "./Icon.astro";
+
+// Círculo con check (o X) usado en listas.
+interface Props {
+  tone?: "soft" | "lime" | "solid" | "danger";
+  icon?: "check" | "x";
+  class?: string;
+}
+
+const { tone = "soft", icon = "check", class: className = "size-5" } =
+  Astro.props;
+
+const tones = {
+  soft: "bg-soft text-green",
+  lime: "bg-lime/15 text-lime",
+  solid: "bg-green text-white",
+  danger: "bg-danger-soft text-danger",
+};
+---
+
+<span
+  class:list={[
+    "grid shrink-0 place-items-center rounded-full",
+    tones[tone],
+    className,
+  ]}
+>
+  <Icon name={icon} class="size-3" />
+</span>
