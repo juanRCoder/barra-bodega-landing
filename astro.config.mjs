@@ -4,6 +4,8 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { site } from "./src/config/site.ts";
 
+const lastmod = new Date().toISOString();
+
 // https://astro.build/config
 export default defineConfig({
   site: site.url,

@@ -2,121 +2,61 @@
 import SEO from "../components/SEO.astro";
 import IconSprite from "../components/IconSprite.astro";
 import { site } from "../config/site";
-import { faqs, planFeatures, plans, video } from "../data/landing";
+import { plans, video } from "../data/landing";
+import logoImage from "../assets/logo.webp";
 import "../styles/global.css";
 
-type Props = Pick<
-  import("../components/SEO.astro").Props,
-  "title" | "description" | "image" | "imageAlt" | "type" | "noindex"
->;
+type Props = import("../components/SEO.astro").Props;
 
 const siteUrl = Astro.site!.href;
-const { address } = site;
-const sameAs = Object.values(site.social).filter(Boolean);
-const hasAddress = Object.values(address).some(Boolean);
-
-// Drops empty strings, empty arrays and undefined so the JSON-LD only carries real data.
-const clean = (obj: Record<string, unknown>) =>
-  Object.fromEntries(
-    Object.entries(obj).filter(
-      ([, v]) =>
-        v !== "" && v !== undefined && !(Array.isArray(v) && v.length === 0),
-    ),
-  );
-
-const businessId = `${siteUrl}#organization`;
 const abs = (path: string) => new URL(path, siteUrl).href;
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    clean({
-      "@type": site.type,
-      "@id": businessId,
-      name: site.name,
-      description: site.description,
-      url: siteUrl,
-      logo: abs(site.logo),
-      image: abs(site.ogImage),
-      telephone: site.telephone,
-      email: site.email,
-      address: hasAddress
-        ? clean({
-            "@type": "PostalAddress",
-            streetAddress: address.street,
-            addressLocality: address.city,
-            addressRegion: address.region,
-            postalCode: address.postalCode,
-            addressCountry: address.country,
-          })
-        : undefined,
-      areaServed: site.areaServed.map((name) => ({ "@type": "Country", name })),
-      sameAs,
-    }),
     {
       "@type": "WebSite",
       "@id": `${siteUrl}#website`,
-      url: siteUrl,
       name: site.name,
+      alternateName: site.altername,
+      url: siteUrl,
       inLanguage: site.lang,
-      publisher: { "@id": businessId },
+      publisher: { "@id": `${siteUrl}#business` },
     },
     {
       "@type": "SoftwareApplication",
-      "@id": `${siteUrl}#app`,
       name: site.name,
       description: site.description,
       url: siteUrl,
-      image: abs(site.ogImage),
       applicationCategory: "BusinessApplication",
       operatingSystem: "Android",
-      inLanguage: site.lang,
-      featureList: planFeatures,
-      publisher: { "@id": businessId },
       offers: Object.values(plans).map((plan) => ({
         "@type": "Offer",
         name: plan.name,
         price: plan.amount.toFixed(2),
         priceCurrency: "PEN",
-        url: `${siteUrl}#precio`,
       })),
     },
     {
       "@type": "VideoObject",
-      "@id": `${siteUrl}#video`,
       name: video.title,
       description: video.description,
-      thumbnailUrl: abs(site.ogImage),
+      thumbnailUrl: abs(video.thumbnail),
       uploadDate: video.uploadDate,
       duration: video.duration,
       contentUrl: abs(video.src),
-      embedUrl: `${siteUrl}#video`,
-      inLanguage: site.lang,
-      publisher: { "@id": businessId },
-    },
-    {
-      "@type": "FAQPage",
-      "@id": `${siteUrl}#faq`,
-      inLanguage: site.lang,
-      mainEntity: faqs.map((faq) => ({
-        "@type": "Question",
-        name: faq.q,
-        acceptedAnswer: { "@type": "Answer", text: faq.a },
-      })),
     },
   ],
 };
 ---
 
 <!doctype html>
-<html lang={site.lang}>
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content={site.themeColor} />
     <script is:inline>
-      // Con JS lo animable arranca oculto (sin parpadeo). Si Motion no arranca
-      // en 4 s, se muestra todo sin animación.
       document.documentElement.classList.add("js");
       setTimeout(() => {
         const root = document.documentElement;

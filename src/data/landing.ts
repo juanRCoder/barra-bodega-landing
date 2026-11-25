@@ -6,11 +6,11 @@ export const waUrl = (message: string = site.whatsappMessage) =>
   `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
 
 export const navLinks = [
-  { href: "#antes-despues", label: "Antes y después" },
-  { href: "#como-funciona", label: "Cómo funciona" },
-  { href: "#video", label: "Video" },
-  { href: "#precio", label: "Precio" },
-  { href: "#preguntas", label: "Preguntas" },
+  { href: "/#antes-despues", label: "Antes y después" },
+  { href: "/#como-funciona", label: "Cómo funciona" },
+  { href: "/#video", label: "Video" },
+  { href: "/#precio", label: "Precio" },
+  { href: "/#preguntas", label: "Preguntas" },
 ];
 
 export const heroChecks = [
@@ -157,4 +157,6 @@ export const video = {
     "Recorrido rápido por BarraBodega: escanea productos, registra ventas y fiados, y revisa tus números del día.",
   uploadDate: "2026-11-25T00:00:00+00:00",
   duration: "PT33S",
+  thumbnail: "/videos/barrabodega-lanzamiento-poster.jpg",
+  watchPath: "/video/",
 };

@@ -1,6 +1,5 @@
 ---
 import { site } from "../config/site";
-
 export interface Props {
   title?: string;
   description?: string;
@@ -15,8 +14,8 @@ export interface Props {
 const {
   title = site.title,
   description = site.description,
-  image = site.ogImage,
-  imageAlt = site.ogImageAlt,
+  image = "/og-image.jpg",
+  imageAlt = "Hero de BarraBodega persona atentiendo en bodega",
   imageWidth = 1200,
   imageHeight = 630,
   type = "website",
@@ -29,17 +28,22 @@ const imageUrl = new URL(image, Astro.site);
 
 <title>{title}</title>
 <meta name="description" content={description} />
+{site.googleSiteVerification && (
+  <meta name="google-site-verification" content={site.googleSiteVerification} />
+)}
 <link rel="canonical" href={canonical} />
 <meta
   name="robots"
-  content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"}
+  content={
+    noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"
+  }
 />
 <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
-<!-- Open Graph (X/Twitter falls back to these for title, description and image) -->
+<!-- Open Graph -->
 <meta property="og:type" content={type} />
-<meta property="og:site_name" content={site.name} />
-<meta property="og:locale" content={site.locale} />
+<meta property="og:site_name" content={site.sitename} />
+<meta property="og:locale" content="es_PE" />
 <meta property="og:url" content={canonical} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
@@ -48,4 +52,9 @@ const imageUrl = new URL(image, Astro.site);
 <meta property="og:image:height" content={String(imageHeight)} />
 <meta property="og:image:alt" content={imageAlt} />
 
+<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
