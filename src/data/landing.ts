@@ -150,13 +150,11 @@ export const barcodeWidths = [
   3, 1, 2, 1, 4, 1, 1, 3, 2, 1, 1, 4, 2, 1, 3, 1, 2, 2, 1, 4, 1, 1, 3, 1, 2, 1,
   4, 2, 1, 1, 3, 1, 2, 1, 1, 4,
 ];
-
-// Video de lanzamiento (public/videos). Duración en formato ISO 8601 para el JSON-LD.
 export const video = {
-  src: "/videos/barrabodega-lanzamiento.mp4",
+  src: "/videos/BarraBodega-lanzamiento-voz-horizontal.mp4",
   title: "BarraBodega: así se vende escaneando desde el celular",
   description:
     "Recorrido rápido por BarraBodega: escanea productos, registra ventas y fiados, y revisa tus números del día.",
-  uploadDate: "2026-11-23",
+  uploadDate: "2026-11-25T00:00:00+00:00",
   duration: "PT33S",
 };
