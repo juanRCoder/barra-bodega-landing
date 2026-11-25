@@ -1,6 +1,6 @@
 export const site = {
   name: "BarraBodega",
-  url: "https://barrabodega.netlify.app",
+  url: "https://barrabodega.lat",
   type: "Organization",
   lang: "es-PE",
   locale: "es_PE",

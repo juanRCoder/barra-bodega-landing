@@ -4,7 +4,7 @@
 
 Landing de **BarraBodega**, la app para tiendas de barrio en Perú: escanea productos con la cámara del celular, registra ventas, controla fiados y muestra cuánto se vendió en el día. La página presenta el producto y lleva al visitante a pedir su mes de prueba gratis por WhatsApp.
 
-**Sitio:** https://barrabodega.netlify.app
+**Sitio:** https://barrabodega.lat
 
 ## Stack
 
