@@ -120,6 +120,10 @@ export const payMethods = ["Yape", "Transferencia bancaria"];
 
 export const faqs = [
   {
+    q: "¿Qué es Barra Bodega?",
+    a: "Barra Bodega (BarraBodega) es una app para bodegas y tiendas de barrio en Perú: escaneas el código de barras de tus productos, registras ventas, controlas tu inventario y tus fiados desde el celular.",
+  },
+  {
     q: "¿Necesito comprar una lectora de códigos?",
     a: "No. BarraBodega usa la cámara de tu celular para leer los códigos de barras de tus productos.",
   },

@@ -2,7 +2,7 @@
 import SEO from "../components/SEO.astro";
 import IconSprite from "../components/IconSprite.astro";
 import { site } from "../config/site";
-import { localBusiness, website, app } from "../config/jsonld";
+import { localBusiness, website, webpage, app } from "../config/jsonld";
 import "../styles/global.css";
 
 type Props = import("../components/SEO.astro").Props;
@@ -12,7 +12,7 @@ const abs = (path: string) => new URL(path, siteUrl).href;
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@graph": [localBusiness, website, app],
+  "@graph": [localBusiness, website, webpage, app],
 };
 ---
 

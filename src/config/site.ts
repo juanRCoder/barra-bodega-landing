@@ -3,11 +3,7 @@ export const site = {
   description:
     "BarraBodega es la app para tiendas de barrio en Perú: escanea productos, registra ventas, controla fiados y sabe cuánto ganaste hoy. Prueba gratis 1 mes.",
   url: "https://barrabodega.lat",
-  // jsonlds
-  name: "BarraBodega",
   sitename: "barrabodega",
-  altername: ["Barra Bodega", "barrabodega"],
-  lang: "es-PE",
   googleSiteVerification: "TebmSHKCH4-omNROK9CFE6POVNIt8FlZvZxV8grG-xI",
   themeColor: "#0B1A14",
   whatsapp: "51956402456",

@@ -32,8 +32,8 @@ export const localBusiness = {
   name: "BarraBodega", // igual al de tu Google Business Profile
   url: "https://barrabodega.lat/",
   telephone: "+51956402456",
-  logo: "https://barrabodega.lat/apple-touch-icon.png",
-  image: "https://barrabodega.lat/og-image.jpg",
+  logo: "https://barrabodega.lat/logo-1200.png",
+  image: "https://barrabodega.lat/logo-1200.png",
   address: {
     "@type": "PostalAddress",
     // streetAddress: 'Av. Ejemplo 123',
@@ -93,7 +93,7 @@ export const app = {
   description:
     "App para tiendas de barrio en Perú: ventas, inventario y fiados.",
   url: "https://barrabodega.lat/",
-  image: "https://barrabodega.lat/og-image.jpg",
+  image: "https://barrabodega.lat/logo-1200.png",
   operatingSystem: "Android",
   applicationCategory: "BusinessApplication",
   inLanguage: "es-PE",
@@ -134,6 +134,27 @@ export const website = {
   inLanguage: "es-PE", // idioma del sitio
   publisher: { "@id": "https://barrabodega.lat/#localbusiness" }, // enlaza al negocio por su @id
 };
+/*
+ * ─── WEBPAGE ─────────────────────────────────────────────────────────────────
+ * primaryImageOfPage: imagen que preferimos como miniatura en Google.
+ * og:image (SEO.astro) sigue siendo la del banner para Discord/WhatsApp.
+ */
+export const webpage = {
+  "@type": "WebPage",
+  "@id": "https://barrabodega.lat/#webpage",
+  url: "https://barrabodega.lat/",
+  name: "BarraBodega | App para bodegas: ventas, fiados e inventario",
+  inLanguage: "es-PE",
+  isPartOf: { "@id": "https://barrabodega.lat/#website" },
+  about: { "@id": "https://barrabodega.lat/#app" },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: "https://barrabodega.lat/logo-1200.png",
+    width: 1200,
+    height: 1200,
+  },
+};
+
 /*
  * ─── BREADCRUMBLIST ──────────────────────────────────────────────────────────
  * Ruta de navegación que Google muestra en el resultado en vez de la URL:
